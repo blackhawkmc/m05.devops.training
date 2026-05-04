@@ -37,3 +37,4 @@ blocks:
             - chmod +x kubectl && sudo mv kubectl /usr/local/bin/
             - kubectl get svc flask-app -n g4
             - kubectl get pods -n g4 -l app=flask-app
+
