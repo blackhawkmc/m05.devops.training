@@ -10,7 +10,7 @@ blocks:
     dependencies: []
     task:
       secrets:
-        - name: DOCKER_LOGIN
+        - name: DOCKER_FILIP
       jobs:
         - name: Deploy green manifests
           commands:
@@ -20,7 +20,7 @@ blocks:
             - chmod +x kubectl && sudo mv kubectl /usr/local/bin/
             - kubectl create namespace g4 || true
             - cd 2-blue-green-deployment
-            - sed -i "s|DOCKER_USERNAME|$DOCKER_USERNAME|g" deployment-green.yml
+            - sed -i "s|DOCKER_USERNAME|$DOCKER_USERNAME_FILIP|g" deployment-green.yml
             - kubectl apply -f deployment-green.yml -n g4 --validate=false
             - kubectl apply -f service-green.yml -n g4 --validate=false
             - kubectl rollout status deployment/flask-app-green -n g4 --timeout=120s

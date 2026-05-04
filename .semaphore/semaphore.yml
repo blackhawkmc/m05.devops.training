@@ -16,22 +16,22 @@ blocks:
     dependencies: []
     task:
       secrets:
-        - name: DOCKER_LOGIN
+        - name: DOCKER_FILIP
       jobs:
         - name: Build and push Docker image
           commands:
             - checkout
             - cd 3-canary-deployment
-            - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-            - 'docker build -t "$DOCKER_USERNAME/my-flask-image:latest" .'
-            - 'docker push "$DOCKER_USERNAME/my-flask-image:latest"'
+            - echo "$DOCKER_PASSWORD_FILIP" | docker login -u "$DOCKER_USERNAME_FILIP" --password-stdin
+            - 'docker build -t "$DOCKER_USERNAME_FILIP/my-flask-image:latest" .'
+            - 'docker push "$DOCKER_USERNAME_FILIP/my-flask-image:latest"'
 
   - name: Deploy Stable
     dependencies:
       - Build and Push Image
     task:
       secrets:
-        - name: DOCKER_LOGIN
+        - name: DOCKER_FILIP
       jobs:
         - name: Deploy stable manifests
           commands:
@@ -41,7 +41,7 @@ blocks:
             - chmod +x kubectl && sudo mv kubectl /usr/local/bin/
             - kubectl create namespace g4 || true
             - cd 3-canary-deployment
-            - sed -i "s|DOCKER_USERNAME|$DOCKER_USERNAME|g" deployment-stable.yml
+            - sed -i "s|DOCKER_USERNAME|$DOCKER_USERNAME_FILIP|g" deployment-stable.yml
             - kubectl apply -f deployment-stable.yml -n g4 --validate=false
             - kubectl apply -f service.yml -n g4 --validate=false
             - kubectl rollout status deployment/flask-app-stable -n g4 --timeout=120s

@@ -10,7 +10,7 @@ blocks:
     dependencies: []
     task:
       secrets:
-        - name: DOCKER_LOGIN
+        - name: DOCKER_FILIP
       jobs:
         - name: Deploy canary manifests
           commands:
@@ -20,7 +20,7 @@ blocks:
             - chmod +x kubectl && sudo mv kubectl /usr/local/bin/
             - kubectl create namespace g4 || true
             - cd 3-canary-deployment
-            - sed -i "s|DOCKER_USERNAME|$DOCKER_USERNAME|g" deployment-canary.yml
+            - sed -i "s|DOCKER_USERNAME|$DOCKER_USERNAME_FILIP|g" deployment-canary.yml
             - kubectl apply -f deployment-canary.yml -n g4 --validate=false
             - kubectl rollout status deployment/flask-app-canary -n g4 --timeout=120s
 
